@@ -10,7 +10,7 @@ public class GameLogic
 	public static final int GRID_SIZE = 3;
 
 	/**
-	 * Enum representing a Player (X/0).
+	 * Enum representing a Player (X/O).
 	 */
 	public enum Player
 	{
@@ -65,17 +65,25 @@ public class GameLogic
 	 * Attempts to place given player at given cellIndex.
 	 *
 	 * @param cellIndex the index of the cell.
-	 * @param player the player that is being placed.
 	 * @return whether the player was placed or not.
 	 */
-	public boolean setCell(int cellIndex, Player player)
+	public boolean setCell(int cellIndex)
 	{
 		if(!canPlace(cellIndex)) return false;
 
-		cells[cellIndex] = player;
+		cells[cellIndex] = currentPlayer();
 		moveCounter++;
 
 		return true;
+	}
+
+	/**
+	 * @return the Player that's currently making a move, or null if the game is over.
+	 */
+	public Player currentPlayer()
+	{
+		if(isOver()) return null;
+		return moveCounter % 2 == 0 ? Player.X : Player.O;
 	}
 
 	/**

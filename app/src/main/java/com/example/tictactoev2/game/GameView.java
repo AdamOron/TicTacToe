@@ -16,8 +16,8 @@ public class GameView extends LinearLayout
 	/* Properties for creating the Views. */
 	private static final int CELL_DIM = 350, CELL_MARGIN = 5;
 
-	/* Simple interface for handling a move. */
-	public interface OnMoveListener
+	/* Simple interface for handling a cell click. */
+	public interface OnCellClickListener
 	{
 		/**
 		 * Called whenever a cell Button is pressed.
@@ -25,10 +25,10 @@ public class GameView extends LinearLayout
 		 * @param cellIndex the index of the cell that was pressed.
 		 * @param cellButton the button of the cell that was pressed.
 		 */
-		void onMove(int cellIndex, Button cellButton);
+		void onCellClick(int cellIndex, Button cellButton);
 	}
 
-	private OnMoveListener onMoveListener;
+	private OnCellClickListener onCellClickListener;
 
 	/**
 	 * @param context to be passed to super constructor.
@@ -45,11 +45,11 @@ public class GameView extends LinearLayout
 	/**
 	 * Updates the OnMoveListener instance.
 	 *
-	 * @param onMoveListener to be set.
+	 * @param onCellClickListener to be set.
 	 */
-	public void setOnMoveListener(OnMoveListener onMoveListener)
+	public void setOnCellClickListener(OnCellClickListener onCellClickListener)
 	{
-		this.onMoveListener = onMoveListener;
+		this.onCellClickListener = onCellClickListener;
 	}
 
 	/**
@@ -105,12 +105,12 @@ public class GameView extends LinearLayout
 		params.setMargins(CELL_MARGIN, CELL_MARGIN, CELL_MARGIN, CELL_MARGIN);
 		button.setLayoutParams(params);
 
-		/* Whenever the cell Button is clicked, call the OnMoveListener for the Button. */
+		/* Whenever the cell Button is clicked, call onCellClick for the Button. */
 		button.setOnClickListener(event ->
 		{
-			if(onMoveListener != null)
+			if(onCellClickListener != null)
 			{
-				onMoveListener.onMove(cellIndex, (Button) event);
+				onCellClickListener.onCellClick(cellIndex, (Button) event);
 			}
 		});
 

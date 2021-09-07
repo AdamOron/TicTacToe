@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.tictactoev2.game.GameActivity;
-
 public class MainActivity extends AppCompatActivity
 {
 	@Override

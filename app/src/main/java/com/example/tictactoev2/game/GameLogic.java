@@ -62,17 +62,14 @@ public class GameLogic
 	}
 
 	/**
-	 * Attempts to place given player at given x & y indices.
+	 * Attempts to place given player at given cellIndex.
 	 *
-	 * @param x the column to place at.
-	 * @param y the row to place at.
+	 * @param cellIndex the index of the cell.
 	 * @param player the player that is being placed.
 	 * @return whether the player was placed or not.
 	 */
-	public boolean set(int x, int y, Player player)
+	public boolean setCell(int cellIndex, Player player)
 	{
-		int cellIndex = getCellIndex(x, y);
-
 		if(!canPlace(cellIndex)) return false;
 
 		cells[cellIndex] = player;
@@ -103,6 +100,14 @@ public class GameLogic
 		}
 
 		return winner;
+	}
+
+	/**
+	 * @return amount of valid moves made (also represents amount of cells occupied).
+	 */
+	public int getMoveCounter()
+	{
+		return moveCounter;
 	}
 
 	/**
@@ -139,11 +144,19 @@ public class GameLogic
 		return row * GRID_SIZE + col;
 	}
 
+	/**
+	 * @param cellIndex the index of the cell.
+	 * @return the column at which the cell is.
+	 */
 	public static int getColumn(int cellIndex)
 	{
 		return cellIndex % GRID_SIZE;
 	}
 
+	/**
+	 * @param cellIndex the index of the cell.
+	 * @return the row at which the cell is.
+	 */
 	public static int getRow(int cellIndex)
 	{
 		return cellIndex / GRID_SIZE;

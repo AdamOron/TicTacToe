@@ -6,17 +6,35 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+/**
+ * GameView class that is a visualizer of a TicTacToe game. Contains a 3x3 grid of buttons.
+ *
+ * @author AdamOron
+ */
 public class GameView extends LinearLayout
 {
+	/* Properties for creating the Views. */
 	private static final int CELL_DIM = 350, CELL_MARGIN = 5;
 
-	interface OnMoveListener
+	/* Simple interface for handling a move. */
+	public interface OnMoveListener
 	{
-		void onMove(int cellIndex);
+		/**
+		 * Called whenever a cell Button is pressed.
+		 *
+		 * @param cellIndex the index of the cell that was pressed.
+		 * @param cellButton the button of the cell that was pressed.
+		 */
+		void onMove(int cellIndex, Button cellButton);
 	}
 
 	private OnMoveListener onMoveListener;
 
+	/**
+	 * @param context to be passed to super constructor.
+	 *
+	 * Constructs LinearLayout that visualizes a TicTacToe game.
+	 */
 	public GameView(Context context)
 	{
 		super(context);
@@ -24,14 +42,22 @@ public class GameView extends LinearLayout
 		createView();
 	}
 
+	/**
+	 * Updates the OnMoveListener instance.
+	 *
+	 * @param onMoveListener to be set.
+	 */
 	public void setOnMoveListener(OnMoveListener onMoveListener)
 	{
 		this.onMoveListener = onMoveListener;
 	}
 
+	/**
+	 * Create the game's view.
+	 */
 	private void createView()
 	{
-		/* Prepare LinearLayout settings */
+		/* Prepare LinearLayout properties */
 		setGravity(Gravity.CENTER);
 		setOrientation(VERTICAL);
 		setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -43,6 +69,10 @@ public class GameView extends LinearLayout
 		}
 	}
 
+	/**
+	 * @param row the number of the row we are creating.
+	 * @return a new row of buttons.
+	 */
 	private LinearLayout createButtonRow(int row)
 	{
 		LinearLayout rowLayout = new LinearLayout(getContext());
@@ -63,6 +93,10 @@ public class GameView extends LinearLayout
 		return rowLayout;
 	}
 
+	/**
+	 * @param cellIndex the index of the cell whom we are creating a Button for.
+	 * @return a Button for the given cell index.
+	 */
 	private Button createButton(int cellIndex)
 	{
 		Button button = new Button(getContext());
@@ -71,11 +105,12 @@ public class GameView extends LinearLayout
 		params.setMargins(CELL_MARGIN, CELL_MARGIN, CELL_MARGIN, CELL_MARGIN);
 		button.setLayoutParams(params);
 
-		button.setOnClickListener(view ->
+		/* Whenever the cell Button is clicked, call the OnMoveListener for the Button. */
+		button.setOnClickListener(event ->
 		{
 			if(onMoveListener != null)
 			{
-				onMoveListener.onMove(cellIndex);
+				onMoveListener.onMove(cellIndex, (Button) event);
 			}
 		});
 

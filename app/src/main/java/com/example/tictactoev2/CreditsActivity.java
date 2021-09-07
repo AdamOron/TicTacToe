@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 
-public class CreditsView extends AppCompatActivity
+public class CreditsActivity extends AppCompatActivity
 {
 	private ImageView creditsImage;
 

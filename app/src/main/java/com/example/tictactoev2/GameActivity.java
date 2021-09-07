@@ -65,7 +65,7 @@ public class GameActivity extends AppCompatActivity implements GameView.OnCellCl
 
 	private void enterCredits()
 	{
-		Intent intent = new Intent(this, CreditsView.class);
+		Intent intent = new Intent(this, CreditsActivity.class);
 		intent.putExtra("winner", gameLogic.getWinner());
 		startActivity(intent);
 	}

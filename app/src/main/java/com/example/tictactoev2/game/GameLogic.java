@@ -12,7 +12,7 @@ public class GameLogic
 	/**
 	 * Enum representing a Player (X/O).
 	 */
-	public enum Player
+	public enum Cell
 	{
 		X, O,
 	}
@@ -40,7 +40,7 @@ public class GameLogic
 	 * Array of every grid cell. Each cell is represented by the Player occupying it, with a null
 	 * value representing a free cell.
 	 */
-	private Player[] cells;
+	private Cell[] cells;
 	/**
 	 * Keeps track of all valid moves made by players. Each valid move is another occupied cell.
 	 */
@@ -49,14 +49,14 @@ public class GameLogic
 	 * The winning Player. Null on initialization, is assigned a proper value when someone wins.
 	 * If the game is over but the winner is still null, then there was a tie.
 	 */
-	private Player winner;
+	private Cell winner;
 
 	/**
 	 * Constructs GameLogic by initializing its values.
 	 */
 	public GameLogic()
 	{
-		this.cells = new Player[GRID_SIZE * GRID_SIZE];
+		this.cells = new Cell[GRID_SIZE * GRID_SIZE];
 		this.moveCounter = 0;
 		this.winner = null;
 	}
@@ -80,16 +80,16 @@ public class GameLogic
 	/**
 	 * @return the Player that's currently making a move, or null if the game is over.
 	 */
-	public Player currentPlayer()
+	public Cell currentPlayer()
 	{
 		if(isOver()) return null;
-		return moveCounter % 2 == 0 ? Player.X : Player.O;
+		return moveCounter % 2 == 0 ? Cell.X : Cell.O;
 	}
 
 	/**
 	 * @return the winner of the game.
 	 */
-	public Player getWinner()
+	public Cell getWinner()
 	{
 		/* If we are already aware of a winner, return it. */
 		if(winner != null) return winner;
@@ -137,7 +137,7 @@ public class GameLogic
 		return !isOver() && cells[cellIndex] == null;
 	}
 
-	public Player getCell(int cellIndex)
+	public Cell getCell(int cellIndex)
 	{
 		return cells[cellIndex];
 	}

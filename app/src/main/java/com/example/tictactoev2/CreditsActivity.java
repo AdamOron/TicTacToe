@@ -33,7 +33,7 @@ public class CreditsActivity extends AppCompatActivity
 
 	private void setCredits()
 	{
-		GameLogic.Player winner = (GameLogic.Player) getIntent().getExtras().get(KEY_WINNER);
+		GameLogic.Cell winner = (GameLogic.Cell) getIntent().getExtras().get(KEY_WINNER);
 
 		if(winner == null)
 		{

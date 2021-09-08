@@ -9,7 +9,9 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.TicTacToeV2">
-        <activity android:name=".CreditsActivity"></activity>
+        <activity android:name=".PlayerSelectionActivity"></activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".CreditsActivity" />
         <activity android:name=".GameActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

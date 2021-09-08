@@ -11,6 +11,6 @@ public class MainActivity extends AppCompatActivity
 	{
 		super.onCreate(savedInstanceState);
 
-		startActivity(new Intent(this, GameActivity.class));
+		startActivity(new Intent(this, PlayerSelectionActivity.class));
 	}
 }

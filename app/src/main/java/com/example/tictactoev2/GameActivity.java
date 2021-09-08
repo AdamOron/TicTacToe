@@ -36,7 +36,7 @@ public class GameActivity extends AppCompatActivity implements GameView.OnCellCl
 	@Override
 	public void onCellClick(int cellIndex, Button cellButton)
 	{
-		GameLogic.Player current = gameLogic.currentPlayer();
+		GameLogic.Cell current = gameLogic.currentPlayer();
 
 		/* If current player is null, the game is over */
 		if(current == null) return;

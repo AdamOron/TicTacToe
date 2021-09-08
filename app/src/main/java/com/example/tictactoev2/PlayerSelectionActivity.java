@@ -1,25 +1,21 @@
 package com.example.tictactoev2;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
-
 import com.example.tictactoev2.player.Player;
-import com.example.tictactoev2.player.PlayerAdapter;
-import com.example.tictactoev2.player.PlayerDB;
+import com.example.tictactoev2.player.PlayerCreationDialog;
 
 import java.util.ArrayList;
 
-public class PlayerSelectionActivity extends AppCompatActivity implements AdapterView.OnItemClickListener
+public class PlayerSelectionActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener
 {
-	private PlayerDB playerDB;
 	private ListView lvPlayers;
-	private ArrayList<Player> playerList;
-	private PlayerAdapter adapter;
+	private PlayerListManager playerList;
+	private Button addPlayer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -38,20 +34,35 @@ public class PlayerSelectionActivity extends AppCompatActivity implements Adapte
 		System.out.println(clicked.getName());
 	}
 
+	@Override
+	public void onClick(View view)
+	{
+		switch(view.getId())
+		{
+		case R.id.createPlayer:
+			enterPlayerCreation();
+			break;
+		}
+	}
+
+	private void enterPlayerCreation()
+	{
+		PlayerCreationDialog dialog = new PlayerCreationDialog(this, playerList);
+		dialog.show();
+	}
+
 	private void initVariables()
 	{
-		playerDB = new PlayerDB(this);
+		playerList = new PlayerListManager(this);
 
-		writePlayers();
-
-		playerList = new ArrayList<>();
-		playerDB.read(playerList);
-
-		adapter = new PlayerAdapter(this, 0, 0, playerList);
+		//writePlayers();
 
 		lvPlayers = findViewById(R.id.lvPlayers);
-		lvPlayers.setAdapter(adapter);
+		lvPlayers.setAdapter(playerList.getAdapter());
 		lvPlayers.setOnItemClickListener(this);
+
+		addPlayer = findViewById(R.id.createPlayer);
+		addPlayer.setOnClickListener(this);
 	}
 
 	private void writePlayers()
@@ -60,8 +71,8 @@ public class PlayerSelectionActivity extends AppCompatActivity implements Adapte
 
 		players.add(new Player("Adam", Player.Gender.MALE, 39));
 		players.add(new Player("Eve", Player.Gender.FEMALE, 7));
-		players.add(new Player("Jamal", Player.Gender.MALE, 69));
+		players.add(new Player("Dave", Player.Gender.MALE, 69));
 
-		playerDB.write(players);
+		playerList.getPlayerDB().write(players);
 	}
 }

@@ -1,6 +1,5 @@
 package com.example.tictactoev2;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -44,10 +43,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 		case R.id.bStart:
 			break;
 		}
-	}
-
-	private void enterPlayerSelection()
-	{
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 	}
 }

@@ -68,6 +68,11 @@ public class Player
 		return object;
 	}
 
+	public void increaseRecord()
+	{
+		this.record++;
+	}
+
 	public String getName()
 	{
 		return name;

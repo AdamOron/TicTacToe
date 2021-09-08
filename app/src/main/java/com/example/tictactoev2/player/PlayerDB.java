@@ -1,10 +1,8 @@
 package com.example.tictactoev2.player;
 
 import android.content.Context;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -27,13 +25,13 @@ public class PlayerDB
 		this.context = context;
 	}
 
-	public void write(ArrayList<Player> players)
+	public void clear()
 	{
 		FileOutputStream fos = null;
 
 		try
 		{
-			fos = context.openFileOutput(FILENAME, context.MODE_PRIVATE);
+			fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
 			FileWriter fw = new FileWriter(fos.getFD());
 			fw.write("");
 			fos.close();
@@ -47,6 +45,11 @@ public class PlayerDB
 		{
 			e.printStackTrace();
 		}
+	}
+
+	public void write(ArrayList<Player> players)
+	{
+		clear();
 
 		for (int i = 0; i < players.size(); i++)
 		{

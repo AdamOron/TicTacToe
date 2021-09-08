@@ -3,10 +3,16 @@ package com.example.tictactoev2;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.example.tictactoev2.game.GameLogic;
 
 public class CreditsActivity extends AppCompatActivity
 {
+	public static final String KEY_WINNER = "key_winner";
+
 	private ImageView creditsImage;
+	private TextView creditsText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -20,11 +26,24 @@ public class CreditsActivity extends AppCompatActivity
 	private void initVars()
 	{
 		creditsImage = findViewById(R.id.ivCredits);
-		setCreditsImage();
+		creditsText = findViewById(R.id.tvCredits);
+
+		setCredits();
 	}
 
-	private void setCreditsImage()
+	private void setCredits()
 	{
-		creditsImage.setBackgroundResource(getIntent().getExtras().get("winner") == null ? R.drawable.tie : R.drawable.trophy);
+		GameLogic.Player winner = (GameLogic.Player) getIntent().getExtras().get(KEY_WINNER);
+
+		if(winner == null)
+		{
+			creditsImage.setBackgroundResource(R.drawable.tie);
+			creditsText.setText("Tie!");
+		}
+		else
+		{
+			creditsImage.setBackgroundResource(R.drawable.trophy);
+			creditsText.setText(winner.toString() + "'s win!");
+		}
 	}
 }

@@ -1,7 +1,6 @@
 package com.example.tictactoev2;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -66,7 +65,8 @@ public class GameActivity extends AppCompatActivity implements GameView.OnCellCl
 	private void enterCredits()
 	{
 		Intent intent = new Intent(this, CreditsActivity.class);
-		intent.putExtra("winner", gameLogic.getWinner());
+		intent.putExtra(CreditsActivity.KEY_WINNER, gameLogic.getWinner());
+
 		startActivity(intent);
 	}
 }

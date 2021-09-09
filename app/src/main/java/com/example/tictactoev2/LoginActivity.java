@@ -18,6 +18,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 		initVars();
 	}
 
+	@Override
+	public void onClick(View view)
+	{
+		switch(view.getId())
+		{
+			case R.id.bSelectX:
+				break;
+
+			case R.id.bSelectO:
+				break;
+
+			case R.id.bStart:
+				break;
+		}
+	}
+
 	private void initVars()
 	{
 		xPicker = findViewById(R.id.bSelectX);
@@ -27,21 +43,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 		xPicker.setOnClickListener(this);
 		oPicker.setOnClickListener(this);
 		start.setOnClickListener(this);
-	}
-
-	@Override
-	public void onClick(View view)
-	{
-		switch(view.getId())
-		{
-		case R.id.bSelectX:
-			break;
-
-		case R.id.bSelectO:
-			break;
-
-		case R.id.bStart:
-			break;
-		}
 	}
 }

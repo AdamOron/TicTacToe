@@ -7,15 +7,24 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import com.example.tictactoev2.player.Player;
+import com.example.tictactoev2.player.PlayerAdapter;
 import com.example.tictactoev2.player.PlayerCreationDialog;
 
 import java.util.ArrayList;
 
-public class PlayerSelectionActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener
+public class PlayerSelectionActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener, PlayerCreationDialog.OnPlayerCreationListener
 {
 	private ListView lvPlayers;
-	private PlayerListManager playerList;
+	private PlayerAdapter adapter;
+	private PlayerList playerList;
 	private Button addPlayer;
+
+	public interface OnPlayerSelectionListener
+	{
+		void onPlayerSelection(Player selected);
+	}
+
+	private OnPlayerSelectionListener onPlayerSelectionListener;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -23,7 +32,7 @@ public class PlayerSelectionActivity extends AppCompatActivity implements Adapte
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_player_selection);
 
-		initVariables();
+		initVars();
 	}
 
 	@Override
@@ -31,7 +40,7 @@ public class PlayerSelectionActivity extends AppCompatActivity implements Adapte
 	{
 		Player clicked = playerList.get(position);
 
-		System.out.println(clicked.getName());
+		submitSelection(clicked);
 	}
 
 	@Override
@@ -45,20 +54,42 @@ public class PlayerSelectionActivity extends AppCompatActivity implements Adapte
 		}
 	}
 
+	@Override
+	public void onPlayerCreation(Player created)
+	{
+		playerList.add(created);
+		adapter.notifyDataSetChanged();
+	}
+
+	public void setOnPlayerSelectionListener(OnPlayerSelectionListener onPlayerSelectionListener)
+	{
+		this.onPlayerSelectionListener = onPlayerSelectionListener;
+	}
+
+	private void submitSelection(Player selected)
+	{
+		onPlayerSelectionListener.onPlayerSelection(selected);
+
+		setResult();
+	}
+
 	private void enterPlayerCreation()
 	{
-		PlayerCreationDialog dialog = new PlayerCreationDialog(this, playerList);
+		PlayerCreationDialog dialog = new PlayerCreationDialog(this);
+		dialog.setOnPlayerCreationListener(this);
 		dialog.show();
 	}
 
-	private void initVariables()
+	private void initVars()
 	{
-		playerList = new PlayerListManager(this);
+		playerList = new PlayerList(this);
+		adapter = new PlayerAdapter(this, 0, 0, playerList.getPlayers());
 
 		//writePlayers();
+		//playerList.clear();
 
 		lvPlayers = findViewById(R.id.lvPlayers);
-		lvPlayers.setAdapter(playerList.getAdapter());
+		lvPlayers.setAdapter(adapter);
 		lvPlayers.setOnItemClickListener(this);
 
 		addPlayer = findViewById(R.id.createPlayer);
@@ -73,6 +104,6 @@ public class PlayerSelectionActivity extends AppCompatActivity implements Adapte
 		players.add(new Player("Eve", Player.Gender.FEMALE, 7));
 		players.add(new Player("Dave", Player.Gender.MALE, 69));
 
-		playerList.getPlayerDB().write(players);
+		playerList.add(players);
 	}
 }

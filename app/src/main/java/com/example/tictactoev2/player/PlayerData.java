@@ -14,13 +14,13 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
-public class PlayerDB
+public class PlayerData
 {
 	private static final String FILENAME = "players.txt";
 
 	private Context context;
 
-	public PlayerDB(Context context)
+	public PlayerData(Context context)
 	{
 		this.context = context;
 	}

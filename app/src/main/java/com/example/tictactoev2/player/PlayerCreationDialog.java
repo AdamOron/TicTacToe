@@ -8,20 +8,24 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import androidx.annotation.NonNull;
-import com.example.tictactoev2.PlayerListManager;
+import com.example.tictactoev2.PlayerList;
 import com.example.tictactoev2.R;
 
 public class PlayerCreationDialog extends Dialog implements View.OnClickListener
 {
-	private PlayerListManager playerList;
 	private EditText playerName, playerGender;
 	private Button submit;
 
-	public PlayerCreationDialog(@NonNull Context context, PlayerListManager playerList)
+	public interface OnPlayerCreationListener
+	{
+		void onPlayerCreation(Player created);
+	}
+
+	private OnPlayerCreationListener onPlayerCreationListener;
+
+	public PlayerCreationDialog(@NonNull Context context)
 	{
 		super(context);
-
-		this.playerList = playerList;
 	}
 
 	@Override
@@ -35,6 +39,36 @@ public class PlayerCreationDialog extends Dialog implements View.OnClickListener
 		initVars();
 	}
 
+	@Override
+	public void onClick(View view)
+	{
+		switch(view.getId())
+		{
+			case R.id.submit:
+				submitPlayer();
+				break;
+		}
+	}
+
+	public void setOnPlayerCreationListener(OnPlayerCreationListener onPlayerCreationListener)
+	{
+		this.onPlayerCreationListener = onPlayerCreationListener;
+	}
+
+	private void submitPlayer()
+	{
+		dispatchEvent();
+		dismiss();
+	}
+
+	private void dispatchEvent()
+	{
+		String name = playerName.getText().toString();
+		Player.Gender gender = getGender(playerGender.getText().toString());
+
+		onPlayerCreationListener.onPlayerCreation(new Player(name, gender, 0));
+	}
+
 	private void initVars()
 	{
 		playerName = findViewById(R.id.nameForm);
@@ -42,31 +76,6 @@ public class PlayerCreationDialog extends Dialog implements View.OnClickListener
 
 		submit = findViewById(R.id.submit);
 		submit.setOnClickListener(this);
-	}
-
-	@Override
-	public void onClick(View view)
-	{
-		switch(view.getId())
-		{
-		case R.id.submit:
-			submitPlayer();
-			break;
-		}
-	}
-
-	private void submitPlayer()
-	{
-		writePlayer();
-		dismiss();
-	}
-
-	private void writePlayer()
-	{
-		String name = playerName.getText().toString();
-		Player.Gender gender = getGender(playerGender.getText().toString());
-
-		playerList.add(new Player(name, gender, 0));
 	}
 
 	private Player.Gender getGender(String genderStr)

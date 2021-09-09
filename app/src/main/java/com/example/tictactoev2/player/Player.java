@@ -87,4 +87,10 @@ public class Player
 	{
 		return record;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "<" + getName() + ">";
+	}
 }

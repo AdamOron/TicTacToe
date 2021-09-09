@@ -10,6 +10,9 @@ import com.example.tictactoev2.game.GameView;
 
 public class GameActivity extends AppCompatActivity implements GameView.OnCellClickListener
 {
+	public static final String KEY_X_PLAYER = "key_x_player";
+	public static final String KEY_O_PLAYER = "key_o_player";
+
 	private GameLogic gameLogic;
 	private GameView game;
 
@@ -65,7 +68,9 @@ public class GameActivity extends AppCompatActivity implements GameView.OnCellCl
 	private void enterCredits()
 	{
 		Intent intent = new Intent(this, CreditsActivity.class);
-		intent.putExtra(CreditsActivity.KEY_WINNER, gameLogic.getWinner());
+		intent.putExtra(CreditsActivity.KEY_WINNER_SHAPE, gameLogic.getWinner());
+		intent.putExtra(CreditsActivity.KEY_PLAYER_X, getIntent().getIntExtra(KEY_X_PLAYER, 0));
+		intent.putExtra(CreditsActivity.KEY_PLAYER_O, getIntent().getIntExtra(KEY_O_PLAYER, 0));
 
 		startActivity(intent);
 	}

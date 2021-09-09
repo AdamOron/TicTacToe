@@ -6,13 +6,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.tictactoev2.game.GameLogic;
+import com.example.tictactoev2.player.Player;
 
 public class CreditsActivity extends AppCompatActivity
 {
-	public static final String KEY_WINNER = "key_winner";
+	public static final String KEY_WINNER_SHAPE = "key_winner_shape";
+	public static final String KEY_PLAYER_X = "KEY_PLAYER_X";
+	public static final String KEY_PLAYER_O = "KEY_PLAYER_O";
 
 	private ImageView creditsImage;
 	private TextView creditsText;
+
+	private PlayerList playerList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -25,6 +30,8 @@ public class CreditsActivity extends AppCompatActivity
 
 	private void initVars()
 	{
+		playerList = new PlayerList(this);
+
 		creditsImage = findViewById(R.id.ivCredits);
 		creditsText = findViewById(R.id.tvCredits);
 
@@ -33,7 +40,7 @@ public class CreditsActivity extends AppCompatActivity
 
 	private void setCredits()
 	{
-		GameLogic.Cell winner = (GameLogic.Cell) getIntent().getExtras().get(KEY_WINNER);
+		GameLogic.Cell winner = (GameLogic.Cell) getIntent().getExtras().get(KEY_WINNER_SHAPE);
 
 		if(winner == null)
 		{
@@ -43,7 +50,20 @@ public class CreditsActivity extends AppCompatActivity
 		else
 		{
 			creditsImage.setBackgroundResource(R.drawable.trophy);
-			creditsText.setText(winner.toString() + "'s win!");
+
+			Player winningPlayer = null;
+
+			switch(winner)
+			{
+			case X:
+				winningPlayer = playerList.get(getIntent().getIntExtra(KEY_PLAYER_X, 0));
+				break;
+			case O:
+				winningPlayer = playerList.get(getIntent().getIntExtra(KEY_PLAYER_O, 0));
+				break;
+			}
+
+			creditsText.setText(winningPlayer.getName() + " won!");
 		}
 	}
 }

@@ -1,6 +1,9 @@
 package com.example.tictactoev2;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,17 +17,12 @@ import java.util.ArrayList;
 
 public class PlayerSelectionActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener, PlayerCreationDialog.OnPlayerCreationListener
 {
+	public static final String KEY_SELECTED_PLAYER = "key_selected_id";
+
 	private ListView lvPlayers;
 	private PlayerAdapter adapter;
 	private PlayerList playerList;
 	private Button addPlayer;
-
-	public interface OnPlayerSelectionListener
-	{
-		void onPlayerSelection(Player selected);
-	}
-
-	private OnPlayerSelectionListener onPlayerSelectionListener;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -38,9 +36,7 @@ public class PlayerSelectionActivity extends AppCompatActivity implements Adapte
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int position, long id)
 	{
-		Player clicked = playerList.get(position);
-
-		submitSelection(clicked);
+		submitSelection(position);
 	}
 
 	@Override
@@ -61,16 +57,12 @@ public class PlayerSelectionActivity extends AppCompatActivity implements Adapte
 		adapter.notifyDataSetChanged();
 	}
 
-	public void setOnPlayerSelectionListener(OnPlayerSelectionListener onPlayerSelectionListener)
+	private void submitSelection(int position)
 	{
-		this.onPlayerSelectionListener = onPlayerSelectionListener;
-	}
-
-	private void submitSelection(Player selected)
-	{
-		onPlayerSelectionListener.onPlayerSelection(selected);
-
-		setResult();
+		Intent intent = new Intent();
+		intent.putExtra(KEY_SELECTED_PLAYER, position);
+		setResult(Activity.RESULT_OK, intent);
+		finish();
 	}
 
 	private void enterPlayerCreation()

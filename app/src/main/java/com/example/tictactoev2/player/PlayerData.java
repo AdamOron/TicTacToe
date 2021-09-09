@@ -79,6 +79,8 @@ public class PlayerData
 
 	public void read(ArrayList<Player> players)
 	{
+		players.clear();
+
 		File file = new File(context.getFilesDir(), FILENAME);
 		FileReader fileReader = null;
 		String line= null;

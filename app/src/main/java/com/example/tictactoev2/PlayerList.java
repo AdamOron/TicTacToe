@@ -7,16 +7,14 @@ import java.util.ArrayList;
 
 public class PlayerList
 {
-	private static PlayerList instance = null;
-
 	private PlayerData playerData;
 	private ArrayList<Player> players;
 
 	public PlayerList(Context context)
 	{
-		this.players = new ArrayList<>();
-
 		this.playerData = new PlayerData(context);
+
+		this.players = new ArrayList<>();
 		this.playerData.read(this.players);
 	}
 
@@ -24,6 +22,11 @@ public class PlayerList
 	{
 		players.clear();
 		playerData.clear();
+	}
+
+	public void update()
+	{
+		playerData.read(players);
 	}
 
 	public Player get(int index)
